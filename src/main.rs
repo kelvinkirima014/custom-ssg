@@ -66,8 +66,8 @@ impl Posts {
 pub struct Pages {
     content: String,
 }
-#[allow(dead_code)]
 
+#[allow(dead_code)]
 pub struct Tags {
     tags: String,
 }
