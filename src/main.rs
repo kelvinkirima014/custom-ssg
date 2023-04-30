@@ -1,5 +1,5 @@
-use std::io::Error;
-use std::fs;
+use std::io::{Error, Read};
+use std::fs::{self, File};
 use std::path::PathBuf;
 use std::time::SystemTime;
 //ds that represent the site we want to generate
@@ -37,7 +37,7 @@ impl Posts {
      }
     }
 
-    fn fetch_posts(&self) -> Result<Vec<PathBuf>, Error>{
+    fn fetch_posts(&self) -> Result<Vec<(PathBuf, String)>, Error>{
 
         let mut posts = vec![];
 
@@ -51,17 +51,14 @@ impl Posts {
                 //check if the entry is a file and has .md extension
                 if file.file_type()?.is_file() && path.extension()
                     .and_then(|e| e.to_str()) == Some("md") {
-                        posts.push(path);
+                        let mut file = File::open(&path)?;
+                        let mut contents = String::new();
+                        file.read_to_string(&mut contents)?;
+                        posts.push((path, contents));
                     }
             }
 
             Ok(posts)
-
-        // if let Some(path) = post_path {
-        //     return Ok(PathBuf::new());
-        // } else {
-        //     return Err(err) ;
-        // }
 
     }
 }
@@ -82,8 +79,9 @@ fn main () {
     let posts = Posts::new(post_path);
     match posts.fetch_posts() {
         Ok(posts_path) => {
-            for path in posts_path.iter() {
+            for (path, contents) in posts_path.iter() {
                 println!("{}", path.display());
+                println!("contents: {}", contents);
             }
         },
         Err(err) => {
