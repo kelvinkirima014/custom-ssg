@@ -24,6 +24,14 @@ impl SiteMetadata {
             date,
         }
     }
+
+    // fn fetch_metadata(&self, filepath: PathBuf) -> Result<Self, Error>{
+    //     let content = fs::read_to_string(&filepath);
+    //     let metadata: Self = serde_yaml::from_str(&content)?;
+
+
+    //     Ok(())
+    // }
 }
 #[allow(dead_code)]
 pub struct Posts {
@@ -64,7 +72,15 @@ impl Posts {
 }
 #[allow(dead_code)]
 pub struct Pages {
-    content: String,
+    page_list: String,
+}
+
+impl Pages {
+     fn new(page_list: String) -> Self {
+        Self { 
+            page_list
+         }
+     }
 }
 
 #[allow(dead_code)]
