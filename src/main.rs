@@ -37,6 +37,7 @@ impl SiteMetadata {
 pub struct Posts {
     post_path: PathBuf,
 }
+
 #[allow(dead_code)]
 impl Posts {
     fn new(post_path: PathBuf) -> Self {
@@ -70,25 +71,6 @@ impl Posts {
 
     }
 }
-#[allow(dead_code)]
-pub struct Pages {
-    page_list: String,
-}
-
-impl Pages {
-     fn new(page_list: String) -> Self {
-        Self { 
-            page_list
-         }
-     }
-}
-
-#[allow(dead_code)]
-pub struct Tags {
-    tags: String,
-}
-
-
 
 fn main () {
     let post_path = PathBuf::from("./markdown");
