@@ -1,22 +1,13 @@
-use std::collections::BTreeMap;
-use std::io::{Error, Read};
+use std::convert::{ Infallible, From };
+use std::io::{Error, Read, self};
 use std::fs::{self, File};
 use std::path::PathBuf;
-use std::time::SystemTime;
 use std::io::Write;
 use handlebars::Handlebars;
-use hyper::service::service_fn;
-use hyper::{ Body, Request, Response, Server, service};
+use hyper::service::{service_fn, make_service_fn};
+use hyper::{ Body, Request, Response, Server };
 use serde_json::json;
 //ds that represent the site we want to generate
-
-#[allow(dead_code)]
-pub struct SiteMetadata{
-    title: String,
-    description: String,
-    date: SystemTime,
-}
-
 
 #[allow(dead_code)]
 pub struct Posts {
@@ -35,16 +26,14 @@ impl Posts {
 
         let mut posts = vec![];
 
-        let files = fs::read_dir(&self.post_path)?;
-
-        let mut handlebars = Handlebars::new();
+        let entries = fs::read_dir(&self.post_path)?;
             //iterate over the contents of the directory
-            for file in files {
-                let file = file?;
-                let path = file.path();
+            for entry in entries {
+                let entry = entry?;
+                let path = entry.path();
 
                 //check if the entry is a file and has .md extension
-                if file.file_type()?.is_file() && path.extension()
+                if entry.file_type()?.is_file() && path.extension()
                     .and_then(|e| e.to_str()) == Some("md") {
                         let mut file = File::open(&path)?;
                         let mut contents = String::new();
@@ -71,15 +60,23 @@ fn md_to_html(markdown: &str) -> String {
     html_output
 }
 
-
-fn main () {
+#[tokio::main]
+async fn main () -> Result<(), Error> {
     let post_path = PathBuf::from("./markdown");
     let posts = Posts::new(post_path);
+
+    let custom_template = "<html><body>{{{content}}}</body></html>";
+
+    let mut handlebars = Handlebars::new();
+    handlebars.register_template_string("test_template", custom_template).unwrap();
+
     match posts.fetch_posts() {
         Ok(posts_path) => {
-            for (path, contents) in posts_path.iter() {
-                println!("{}", path.display());
-                println!("contents: {}", contents);
+            for (_path, contents) in posts_path.iter() {
+                let html = handlebars.render("test_template", &json!({"content": md_to_html(contents)}));
+                
+                let mut file = fs::File::create("index.html").unwrap();
+                file.write_all(html.expect("ERr").as_bytes()).unwrap();
             }
         },
         Err(err) => {
@@ -87,28 +84,24 @@ fn main () {
         }
     }
 
-    let post_contents = posts;
-
-    let input_src = "<html><body>{{{content}}}</body></html>";
-
-    let mut handlebars = Handlebars::new();
-    handlebars.register_template_string("a_template", input_src).unwrap();
-
-    let html = handlebars.render("a_template",&json!({"content": md_to_html(post_contents)})).unwrap();
-    
-    let mut file = fs::File::create("index.html").unwrap();
-    file.write_all(html.as_bytes()).unwrap();
-
     let addr = ([127, 0, 0, 1], 3000).into();
 
-    let server = Server::bind(&addr)
-        .serve(|| service_fn(|_req| {
-            let content = fs::read("index.html").unwrap();
-            Response::new(Body::from(content))
+    let make_serve = make_service_fn(|_| async {
+        let content =  fs::read("index.html").unwrap();
+        Ok::<_, Infallible>(service_fn(move |_: Request<Body>| {
+            let response = Response::new(Body::from(content.clone()));
+            async move {
+                Ok::<_, Infallible>(response)
+            }
         }))
-        .map_err(|e| eprintln!("Server error: {}", e));
+    });
+
+    let server = Server::bind(&addr).serve(make_serve);
 
     println!("Listening on http://{}", addr);
-    hyper::rt::run(server);
+    
+    server.await.map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
+
+    Ok(())
   
 }
