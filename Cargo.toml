@@ -6,5 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+handlebars = "4.3.6"
+hyper = { version = "0.14.26", features = ["full"] }
+pulldown-cmark = "0.9.2"
 serde = "1.0.160"
-serde_yaml = "0.9.21"
+serde_json = "1.0.96"
