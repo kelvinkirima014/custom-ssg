@@ -7,14 +7,12 @@ use handlebars::Handlebars;
 use hyper::service::{service_fn, make_service_fn};
 use hyper::{ Body, Request, Response, Server };
 use serde_json::json;
-//ds that represent the site we want to generate
+use pulldown_cmark::{html, Options, Parser};
 
-#[allow(dead_code)]
 pub struct Posts {
     post_path: PathBuf,
 }
 
-#[allow(dead_code)]
 impl Posts {
     fn new(post_path: PathBuf) -> Self {
         Posts {
@@ -47,7 +45,6 @@ impl Posts {
     }
 }
 
-use pulldown_cmark::{html, Options, Parser};
 
 fn md_to_html(markdown: &str) -> String {
     // Set up the parser with default options
@@ -62,14 +59,13 @@ fn md_to_html(markdown: &str) -> String {
 
 #[tokio::main]
 async fn main () -> Result<(), Error> {
-    let post_path = PathBuf::from("./markdown");
-    let posts = Posts::new(post_path);
-
-    let custom_template = "<html><body>{{{content}}}</body></html>";
-
     let mut handlebars = Handlebars::new();
+    let custom_template = "<html><body>{{{content}}}</body></html>";
     handlebars.register_template_string("test_template", custom_template).unwrap();
 
+    let post_path = PathBuf::from("./markdown");
+
+    let posts: Posts = Posts::new(post_path);
     match posts.fetch_posts() {
         Ok(posts_path) => {
             for (_path, contents) in posts_path.iter() {
