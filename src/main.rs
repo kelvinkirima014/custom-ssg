@@ -68,11 +68,13 @@ async fn main () -> Result<(), Error> {
     let posts: Posts = Posts::new(post_path);
     match posts.fetch_posts() {
         Ok(posts_path) => {
-            for (_path, contents) in posts_path.iter() {
+            for (path, contents) in posts_path.iter() {
                 let html = handlebars.render("test_template", &json!({"content": md_to_html(contents)}));
                 
                 let mut file = fs::File::create("index.html").unwrap();
                 file.write_all(html.expect("ERr").as_bytes()).unwrap();
+
+               println!("Contents of {}: \n{}", path.to_string_lossy(), contents);
             }
         },
         Err(err) => {
