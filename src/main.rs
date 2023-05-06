@@ -60,27 +60,40 @@ fn md_to_html(markdown: &str) -> String {
 #[tokio::main]
 async fn main () -> Result<(), Error> {
     let mut handlebars = Handlebars::new();
-    let custom_template = "<html><body>{{{content}}}</body></html>";
-    handlebars.register_template_string("test_template", custom_template).unwrap();
+    //let custom_template = "<html><body>{{{content}}}</body></html>";
+    handlebars.register_template_file("post_template", "templates/posts.hbs")
+        .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
 
     let post_path = PathBuf::from("./markdown");
 
     let posts: Posts = Posts::new(post_path);
-    match posts.fetch_posts() {
-        Ok(posts_path) => {
-            for (path, contents) in posts_path.iter() {
-                let html = handlebars.render("test_template", &json!({"content": md_to_html(contents)}));
-                
-                let mut file = fs::File::create("index.html").unwrap();
-                file.write_all(html.expect("ERr").as_bytes()).unwrap();
 
-               println!("Contents of {}: \n{}", path.to_string_lossy(), contents);
-            }
-        },
-        Err(err) => {
-            println!("Error fetching posts: {}", err);
-        }
+    let fetch_posts = posts.fetch_posts()?;
+
+    let mut index_file = File::create("index.html")?;
+
+    for (path, contents) in fetch_posts {
+        let html = handlebars.render("post_template", &json!({
+            "title": path.file_stem().and_then(|s| s.to_str()).unwrap_or("No title found"),
+            "content": md_to_html(&contents),
+        }));
+
+        index_file.write_all(html.expect("err").as_bytes())?;
+
     }
+    // match posts.fetch_posts() {
+    //     Ok(posts_path) => {
+    //         for (_path, contents) in posts_path.iter() {
+    //             let html = handlebars.render("post_template", &json!({"content": md_to_html(contents)}));
+                
+    //             let mut file = fs::File::create("index.html").unwrap();
+    //             file.write_all(html.expect("ERr").as_bytes()).unwrap();
+    //         }
+    //     },
+    //     Err(err) => {
+    //         println!("Error fetching posts: {}", err);
+    //     }
+    // }
 
     let addr = ([127, 0, 0, 1], 3000).into();
 
