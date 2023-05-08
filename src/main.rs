@@ -73,28 +73,22 @@ async fn main () -> Result<(), Error> {
     let mut index_file = File::create("index.html")?;
 
     for (path, contents) in fetch_posts {
+        let post_title = path
+            .file_stem()
+            .and_then(|s| s.to_str())
+            .unwrap_or("no title found");
+
+        let post_title_link = format!("<a href=\"{}\">{}</a>", path.display(), post_title);
+
         let html = handlebars.render("post_template", &json!({
-            "title": path.file_stem().and_then(|s| s.to_str()).unwrap_or("No title found"),
+            "title": post_title_link,
             "content": md_to_html(&contents),
         }));
 
         index_file.write_all(html.expect("err").as_bytes())?;
 
     }
-    // match posts.fetch_posts() {
-    //     Ok(posts_path) => {
-    //         for (_path, contents) in posts_path.iter() {
-    //             let html = handlebars.render("post_template", &json!({"content": md_to_html(contents)}));
-                
-    //             let mut file = fs::File::create("index.html").unwrap();
-    //             file.write_all(html.expect("ERr").as_bytes()).unwrap();
-    //         }
-    //     },
-    //     Err(err) => {
-    //         println!("Error fetching posts: {}", err);
-    //     }
-    // }
-
+   
     let addr = ([127, 0, 0, 1], 3000).into();
 
     let make_serve = make_service_fn(|_| async {
