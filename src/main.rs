@@ -73,15 +73,15 @@ async fn main () -> Result<(), Error> {
     let mut index_file = File::create("index.html")?;
 
     for (path, contents) in fetch_posts {
-        let post_title = path
+        let _post_title = path
             .file_stem()
             .and_then(|s| s.to_str())
             .unwrap_or("no title found");
 
-        let post_title_link = format!("<a href=\"{}\">{}</a>", path.display(), post_title);
+        //let post_title_link = format!("<a href=\"{}\">{}</a>", path.display(), post_title);
 
         let html = handlebars.render("post_template", &json!({
-            "title": post_title_link,
+            //"title": post_title,
             "content": md_to_html(&contents),
         }));
 
