@@ -10,6 +10,21 @@
                 line-height: 1.75;
             }
 
+            h1 {
+                font-size: larger;
+                color: #333;
+            }
+
+            p.description {
+                font-size: large;
+                color: #666;
+            }
+
+            p.date {
+                font-size: small;
+                color: #999
+            }
+
             a {
                 color: inherit;
             }
@@ -20,6 +35,9 @@
         </style>
     </head>
     <body>
+        <h1>{{title}}</h1>
+        <p class="description">{{description}}</p>
+        <p class="date">{{date}}</p>
         <div>
             {{{content}}}
         </div>
