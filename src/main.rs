@@ -60,7 +60,6 @@ fn md_to_html(markdown: &str) -> String {
 #[tokio::main]
 async fn main () -> Result<(), Error> {
     let mut handlebars = Handlebars::new();
-    //let custom_template = "<html><body>{{{content}}}</body></html>";
     handlebars.register_template_file("post_template", "templates/posts.hbs")
         .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
 
@@ -80,9 +79,18 @@ async fn main () -> Result<(), Error> {
 
         //let post_title_link = format!("<a href=\"{}\">{}</a>", path.display(), post_title);
 
+        let yaml_front_matter = contents.split("---").nth(1).unwrap_or("");
+        let yaml_data: serde_yaml::Value = serde_yaml::from_str(yaml_front_matter).unwrap();
+
+        let post_description = yaml_data["description"].as_str().unwrap_or("");
+        let post_date  =  yaml_data["date"].as_str().unwrap_or("");
+
         let html = handlebars.render("post_template", &json!({
             "title": post_title,
+            "description": post_description,
+            "date": post_date,
             "content": md_to_html(&contents),
+
         }));
 
         index_file.write_all(html.expect("err").as_bytes())?;
