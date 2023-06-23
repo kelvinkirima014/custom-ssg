@@ -59,10 +59,7 @@ fn md_to_html(markdown: &str) -> String {
 
 #[tokio::main]
 async fn main () -> Result<(), Error> {
-    let mut handlebars = Handlebars::new();
-    handlebars.register_template_file("post_template", "templates/posts.hbs")
-        .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
-
+   
     let post_path = PathBuf::from("./markdown");
 
     let posts: Posts = Posts::new(post_path);
@@ -71,20 +68,20 @@ async fn main () -> Result<(), Error> {
 
     let mut index_file = File::create("index.html")?;
 
-    for (path, contents) in fetch_posts {
-        let post_title = path
-            .file_stem()
-            .and_then(|s| s.to_str())
-            .unwrap_or("no title found");
+    let mut handlebars = Handlebars::new();
+         handlebars.register_template_file("post_template", "templates/posts.hbs")
+         .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
 
-        //let post_title_link = format!("<a href=\"{}\">{}</a>", path.display(), post_title);
+
+    for (_path, contents) in fetch_posts {
 
         let yaml_front_matter = contents.split("---").nth(1).unwrap_or("");
         let yaml_data: serde_yaml::Value = serde_yaml::from_str(yaml_front_matter).unwrap();
 
+        let post_title = yaml_data["title"].as_str().unwrap_or("");
         let post_description = yaml_data["description"].as_str().unwrap_or("");
         let post_date  =  yaml_data["date"].as_str().unwrap_or("");
-
+       
         let html = handlebars.render("post_template", &json!({
             "title": post_title,
             "description": post_description,
@@ -97,7 +94,6 @@ async fn main () -> Result<(), Error> {
 
     }
    
-    let addr = ([127, 0, 0, 1], 3000).into();
 
     let make_serve = make_service_fn(|_| async {
         let content =  fs::read("index.html").unwrap();
@@ -108,6 +104,9 @@ async fn main () -> Result<(), Error> {
             }
         }))
     });
+
+    let addr = ([127, 0, 0, 1], 3000).into();
+
 
     let server = Server::bind(&addr).serve(make_serve);
 
