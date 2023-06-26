@@ -9,8 +9,6 @@ use hyper::{ Body, Request, Response, Server, StatusCode };
 use serde_json::json;
 use pulldown_cmark::{html, Options, Parser};
 
-//use tokio::runtime::Handle;
-
 pub struct Posts {
     post_path: PathBuf,
 }
@@ -105,7 +103,7 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
     generate_html(&get_posts)?;
 
 
-      let make_serve = make_service_fn(|_| {
+    let make_serve = make_service_fn(|_| {
         let content_dir = Arc::new(PathBuf::from("."));
         async move {
             Ok::<_, Infallible>(service_fn(move |req: Request<Body>| {
@@ -116,10 +114,20 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
                     // Check if the requested path corresponds to a generated HTML file
                     if let Some(file_name) = path.strip_prefix("/") {
                         let file_path = content_dir.join(file_name);
-                        if file_path.is_file() {
-                            if let Ok(content) = fs::read(file_path){
-                                let response = Response::new(Body::from(content));
-                                return Ok::<_, Infallible>(response);
+                        if file_path.is_file(){
+                            match fs::read(file_path) {
+                                Ok(content) => {
+                                    let response = Response::new(Body::from(content));
+                                    return Ok::<_, Infallible>(response);
+                                }
+                                Err(err) => {
+                                    eprintln!("Failed to read file: {}", err);
+                                    let response = Response::builder()
+                                        .status(StatusCode::INTERNAL_SERVER_ERROR)
+                                        .body(Body::empty())
+                                        .unwrap();
+                                    return Ok::<_, Infallible>(response);
+                                }
                             }
                         }
                     }
