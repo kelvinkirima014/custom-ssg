@@ -1,20 +1,20 @@
-use std::io::{Error, Read, self};
+use std::io::{ Error, Read };
 use std::fs::{self, File};
 use std::path::PathBuf;
-use std::io::Write;
+
 
 pub struct Posts {
     post_path: PathBuf,
 }
 
 impl Posts {
-    fn new(post_path: PathBuf) -> Self {
+    pub fn new(post_path: PathBuf) -> Self {
         Posts {
             post_path,
         }
     }
 
-    fn fetch_posts(&self) -> Result<Vec<(PathBuf, String)>, Error>{
+    pub fn fetch_posts(&self) -> Result<Vec<(PathBuf, String)>, Error>{
 
         let mut posts = vec![];
 
