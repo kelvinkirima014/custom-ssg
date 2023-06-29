@@ -1,7 +1,5 @@
 use std::path::PathBuf;
 
-
-
 pub mod posts;
 pub mod templater;
 pub mod server;
