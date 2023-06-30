@@ -1,10 +1,12 @@
-use std::{sync::Arc, path::PathBuf, fs};
+use std::sync::Arc;
+use std::path::PathBuf;
+use std::fs;
 
 use hyper::{Body, Response, Request, StatusCode};
 
 
 
-async fn serve_html(
+pub(crate) async fn serve_html(
     req: Request<Body>,
     content_dir: Arc<PathBuf>,
 ) -> Result<Response<Body>, hyper::Error> {
