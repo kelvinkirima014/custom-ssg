@@ -1,3 +1,4 @@
+use std::io;
 use std::{path::PathBuf, sync::Arc};
 
 use hyper::service::{make_service_fn, service_fn};
@@ -35,6 +36,9 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
     let addr = ([127, 0, 0, 1], 3000).into();
     let server = Server::bind(&addr).serve(make_hyper_service);
 
+    println!("Server listening on port http://{}", addr);
+
+    server.await.map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
   
     Ok(())
   
