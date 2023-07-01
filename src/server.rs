@@ -10,8 +10,20 @@ pub(crate) async fn serve_html(
 ) -> Result<Response<Body>, hyper::Error> {
 
     let path = req.uri().path();
-    let file_name = path.strip_prefix("").unwrap();
-    let file_path = content_dir.join(file_name);
+    let file_name = path.trim_start_matches("/");
+    //let file_path = content_dir.join(file_name);
+    let file_path = content_dir.join(&req.uri().path()[1..]);
+  
+    println!("filepath: {:?}", file_path);
+
+     if file_path.is_file() {
+        println!("File exists");
+    } else {
+        println!("File does not exist");
+    }
+
+    println!("file_name: {:?}", file_name);
+    println!("content_dir: {:?}", content_dir);
     
     if file_path.is_file(){
         match fs::read(file_path){
@@ -32,6 +44,7 @@ pub(crate) async fn serve_html(
             }
         }
     } else {
+        println!("File not found");
         let response = Response::builder()
             .status(StatusCode::NOT_FOUND)
             .body(Body::empty())

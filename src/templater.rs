@@ -20,6 +20,12 @@ pub fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error> {
     let mut handlebars = Handlebars::new();
         handlebars.register_template_file("blog_template", "templates/posts.hbs")
         .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
+
+    let output_dir = PathBuf::from("bloghtml");
+    match fs::create_dir_all(&output_dir) {
+        Ok(dir) => dir,
+        Err(err) => return Err(err),
+    }
     
     for (path, contents) in posts {
         let yaml_front_matter = contents.split("---").nth(1).unwrap_or("");
@@ -41,8 +47,9 @@ pub fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error> {
         }; 
 
         let file_name = path.file_stem()
-        .and_then(|stem| stem.to_str()).unwrap_or("");
-        let output_file = format!("{}.html", file_name);
+        .and_then(|stem| stem.to_str())
+        .unwrap_or("");
+        let output_file = output_dir.join(format!("{}.html", file_name));
         fs::write(&output_file, rendered_html)?;
 
     }
