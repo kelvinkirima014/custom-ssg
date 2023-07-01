@@ -21,7 +21,7 @@ pub fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error> {
         handlebars.register_template_file("blog_template", "templates/posts.hbs")
         .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
 
-    let output_dir = PathBuf::from("bloghtml");
+    let output_dir = PathBuf::from("blog");
     match fs::create_dir_all(&output_dir) {
         Ok(dir) => dir,
         Err(err) => return Err(err),
