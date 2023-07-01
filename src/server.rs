@@ -1,9 +1,7 @@
 use std::sync::Arc;
 use std::path::PathBuf;
 use std::fs;
-
 use hyper::{Body, Response, Request, StatusCode};
-
 
 
 pub(crate) async fn serve_html(

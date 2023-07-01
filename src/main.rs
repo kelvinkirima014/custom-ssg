@@ -21,7 +21,7 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
     templater::generate_html(&get_posts)?;
 
 
-    let content_dir = Arc::new(PathBuf::from(".."));
+    let content_dir = Arc::new(PathBuf::from("."));
 
     let make_hyper_service = make_service_fn(|_: &AddrStream| {
         let content_dir = content_dir.clone();
