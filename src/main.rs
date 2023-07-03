@@ -21,7 +21,7 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
     templater::generate_html(&get_posts)?;
 
 
-    let content_dir = Arc::new(PathBuf::from(".").canonicalize()?);
+    let content_dir = Arc::new(PathBuf::from("./blog"));//.canonicalize()?);
     println!("content dir: {:?}", content_dir);
 
     let make_hyper_service = make_service_fn(|_: &AddrStream| {
@@ -30,7 +30,7 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
             Ok::<_, hyper::Error>(service_fn(move |req| {
                 let content_dir = content_dir.clone();
                 let file_path = content_dir.join(&req.uri().path().trim_start_matches("/"));//.trim_start_matches('/'));
-                println!("filepath is: {:?}", file_path);
+                println!("filepath from main is: {:?}", file_path);
                 let file_name = file_path.file_name().unwrap_or_default().to_owned();
                 println!("file_name: {:?}", file_name);
                 server::serve_html(req, Arc::new(file_path))

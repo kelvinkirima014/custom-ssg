@@ -9,21 +9,17 @@ pub(crate) async fn serve_html(
     content_dir: Arc<PathBuf>,
 ) -> Result<Response<Body>, hyper::Error> {
 
-    let path = req.uri().path();
-    let file_name = path.trim_start_matches("/");
-    //let file_path = content_dir.join(file_name);
-    let file_path = content_dir.join(&req.uri().path()[1..]);
-  
-    println!("filepath: {:?}", file_path);
+     println!("Request URI: {:?}", req.uri());
+
+    let file_path = content_dir.join(&req.uri().path());
+    println!("file path in server.rs: {:?}", file_path);
+    //let file_path = PathBuf::from("./blog");
 
      if file_path.is_file() {
-        println!("File exists");
-    } else {
-        println!("File does not exist");
-    }
-
-    println!("file_name: {:?}", file_name);
-    println!("content_dir: {:?}", content_dir);
+        println!("Found file");
+     } else {
+        println!("file not found");
+     }
     
     if file_path.is_file(){
         match fs::read(file_path){
