@@ -44,9 +44,6 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
 
     println!("Server listening on port http://{}", addr);
 
-    // if let Err(e) = server.await {
-    //  eprintln!("server error: {}", e);
-    // }
 
     server.await.map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
   
