@@ -12,8 +12,6 @@ pub(crate) async fn serve_html(
      println!("Request URI: {:?}", req.uri());
 
     let file_path = content_dir.join(&req.uri().path());
-    println!("file path in server.rs: {:?}", file_path);
-    //let file_path = PathBuf::from("./blog");
 
      if file_path.is_file() {
         println!("Found file");
