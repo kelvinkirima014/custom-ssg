@@ -1,6 +1,5 @@
 use std::io;
 use std::{path::PathBuf, sync::Arc};
-
 use hyper::service::{make_service_fn, service_fn};
 use hyper::{Server, server::conn::AddrStream};
 
@@ -10,7 +9,7 @@ pub mod server;
 
 
 #[tokio::main]
-async fn main () -> Result<(), Box<dyn std::error::Error>> {
+async fn main () -> Result<(), Box<io::Error>> {
 
     let post_path = PathBuf::from("./markdown");
 
@@ -22,7 +21,7 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
 
 
     let content_dir = Arc::new(PathBuf::from("./blog"));
-   
+    
 
     let make_hyper_service = make_service_fn(|_: &AddrStream| {
 
@@ -31,10 +30,13 @@ async fn main () -> Result<(), Box<dyn std::error::Error>> {
         async {
             Ok::<_, hyper::Error>(service_fn(move |req| {
                 let content_dir = content_dir.clone();
-
-                let file_path = content_dir.join(&req.uri().path().trim_start_matches("/"));
+              
+                // let file_path = content_dir.join(&req.uri().path().trim_start_matches("/"));
              
-                server::serve_html(req, Arc::new(file_path))
+                // server::serve_html(req, file_path.into())
+
+                server::serve_html(req, content_dir)
+            
             }))
         }
     });

@@ -1,5 +1,4 @@
 use std::{path::PathBuf, fs};
-
 use handlebars::Handlebars;
 use pulldown_cmark::{ Parser, Options, html };
 use serde_yaml;

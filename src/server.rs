@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{sync::Arc, io};
 use std::path::PathBuf;
 use std::fs;
 use hyper::{Body, Response, Request, StatusCode};
@@ -9,19 +9,37 @@ pub(crate) async fn serve_html(
     content_dir: Arc<PathBuf>,
 ) -> Result<Response<Body>, hyper::Error> {
 
-     println!("Request URI: {:?}", req.uri());
+    let request_path = req.uri().path().trim_start_matches('/');
 
-    let file_path = content_dir.join(&req.uri().path());
-
-     if file_path.is_file() {
-        println!("Found file");
-     } else {
-        println!("file not found");
-     }
+    let dir_path = content_dir.join(request_path);
+    //content_dir.join(&req.uri().path());
+    println!("Directory path is; {:?}", dir_path);
     
-    if file_path.is_file(){
-        match fs::read(file_path){
-            Ok(contents) => {
+    if dir_path.is_dir(){
+
+        let entries = fs::read_dir(dir_path)
+            .expect("Coud not read Directory")
+            .map(|res| res.map(|e| e.file_name()))
+            .collect::<Result<Vec<_>, io::Error>>()
+            .expect("Could not collect paths");
+        
+        let body = entries.iter()
+            .map(|entry| format!("<a href=\"/{0}\">{0}</a><br />", entry.to_string_lossy()))
+            .collect::<Vec<_>>()
+            .join("");
+
+        let response = Response::builder()
+        .status(StatusCode::OK)
+        .header("Content-Type", "text/html")
+        .body(Body::from(body))
+        .unwrap();
+
+        return Ok(response);
+
+    } else if dir_path.is_file()  {
+        println!("Found File");
+        match fs::read(dir_path){
+            Ok(contents) =>     {
                 let response = Response::builder()
                     .status(StatusCode::OK)
                     .body(Body::from(contents))
