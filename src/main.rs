@@ -32,7 +32,6 @@ async fn main () -> Result<(), Box<io::Error>> {
                 let content_dir = content_dir.clone();
 
                 server::serve_html(req, content_dir)
-            
             }))
         }
     });
@@ -42,7 +41,6 @@ async fn main () -> Result<(), Box<io::Error>> {
     let server = Server::bind(&addr).serve(make_hyper_service);
 
     println!("Server listening on port http://{}", addr);
-
 
     server.await.map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
   
