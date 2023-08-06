@@ -27,12 +27,15 @@ pub fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error> {
     }
     
     for (path, contents) in posts {
-        let yaml_front_matter = contents.split("---").nth(1).unwrap_or("");
+        let split_front_matter: Vec<&str> = contents.splitn(3, "---").collect();
+        let yaml_front_matter = split_front_matter.get(1).unwrap_or(&"");
+        let markdown = split_front_matter.get(2).unwrap_or(&"");
+
         let yaml_data: serde_yaml::Value = serde_yaml::from_str(yaml_front_matter).unwrap();
 
         let post_title = yaml_data["title"].as_str();
         let post_description = yaml_data["description"].as_str();
-        let content = md_to_html(contents);
+        let content = md_to_html(markdown);
         let post_date = yaml_data["date"].as_str();
 
         let rendered_html = match handlebars.render("blog_template", &json!({

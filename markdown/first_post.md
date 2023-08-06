@@ -1,6 +1,6 @@
 ---
 title: A Gentle Introduction to Solana.
-description: This tutorial will teach you how to build and deploy your own programs on the fastest blockchain and the fastest growing crypto ecosystem in the world.
+description: Learn how to build and deploy your own programs on the fastest blockchain and the fastest growing crypto ecosystem in the world.
 date: 2021-09-25T11:00:00.000Z
 ---
 

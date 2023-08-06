@@ -30,7 +30,6 @@ async fn main () -> Result<(), Box<io::Error>> {
         async {
             Ok::<_, hyper::Error>(service_fn( move |req| {
                 let content_dir = content_dir.clone();
-              
 
                 server::serve_html(req, content_dir)
             
