@@ -12,7 +12,6 @@ pub(crate) async fn serve_html(
     let request_path = req.uri().path().trim_start_matches('/');
 
     let dir_path = content_dir.join(request_path);
-    //content_dir.join(&req.uri().path());
     println!("Directory path is; {:?}", dir_path);
     
     if dir_path.is_dir(){

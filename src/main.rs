@@ -28,18 +28,16 @@ async fn main () -> Result<(), Box<io::Error>> {
         let content_dir = content_dir.clone();
 
         async {
-            Ok::<_, hyper::Error>(service_fn(move |req| {
+            Ok::<_, hyper::Error>(service_fn( move |req| {
                 let content_dir = content_dir.clone();
               
-                // let file_path = content_dir.join(&req.uri().path().trim_start_matches("/"));
-             
-                // server::serve_html(req, file_path.into())
 
                 server::serve_html(req, content_dir)
             
             }))
         }
     });
+
 
     let addr = ([127, 0, 0, 1], 3000).into();
     let server = Server::bind(&addr).serve(make_hyper_service);
