@@ -53,7 +53,6 @@ pub fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error> {
         .unwrap_or("");
         let output_file = output_dir.join(format!("{}.html", file_name));
         fs::write(&output_file, rendered_html)?;
-
     }
 
     Ok(())
