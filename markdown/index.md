@@ -8,7 +8,7 @@ This site’s source code is available on GitHub.
 
 About Me
 
-I am a hobbyist Rust programmer, mainly spending my time contributing to open source projects. I’ve been using the language since October 2019, before which I mostly used C and C++. I am also decent at JavaScript and TypeScript, mostly in browser contexts.
+I am a Rust programmer, mainly spending my time building Rust web apps and backend tools. I’ve been using the language since September 2021, before which I mostly programmed in JavaScript and NodeJS. I am also decent with TypeScript.
 
 You can find me via:
 
@@ -22,3 +22,8 @@ Articles
 
 - [Test Post](test_post.html)
 - [A Gentle Introduction to Something Interesting](gentle_intro.html)
+
+
+Follow me on [Twitter](https://twitter.com/your_handle) or [LinkedIn](https://linkedin.com/in/your_profile).
+
+© 2023 by Kirima. All rights reserved.

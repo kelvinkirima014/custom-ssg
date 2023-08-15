@@ -11,33 +11,25 @@ pub(crate) async fn serve_html(
 
     let request_path = req.uri().path().trim_start_matches('/');
 
-    let dir_path = content_dir.join(request_path);
-    println!("Directory path is; {:?}", dir_path);
-    
-    if dir_path.is_dir(){
+    // let dir_path = content_dir.join(request_path);
+    // println!("Directory path is; {:?}", dir_path);
 
-        let entries = fs::read_dir(dir_path)
-            .expect("Coud not read Directory")
-            .map(|res| res.map(|e| e.file_name()))
-            .collect::<Result<Vec<_>, io::Error>>()
-            .expect("Could not collect paths");
-        
-        let body = entries.iter()
-            .map(|entry| format!("<a href=\"/{0}\">{0}</a><br />", entry.to_string_lossy()))
-            .collect::<Vec<_>>()
-            .join("");
 
-        let response = Response::builder()
-        .status(StatusCode::OK)
-        .header("Content-Type", "text/html")
-        .body(Body::from(body))
-        .unwrap();
 
-        return Ok(response);
+    let target_path = if request_path.is_empty() {
+        content_dir.join("index.html")
+    } else {
+        content_dir.join(request_path)
+    };
 
-    } else if dir_path.is_file()  {
+    println!("Target Path is: {:?}", target_path);
+
+
+    if target_path.is_file() {
+
         println!("Found File");
-        match fs::read(dir_path){
+
+        match fs::read(target_path){
             Ok(contents) =>     {
                 let response = Response::builder()
                     .status(StatusCode::OK)
@@ -54,6 +46,28 @@ pub(crate) async fn serve_html(
                 return Ok(error_response);
             }
         }
+
+    } else if target_path.is_dir() {
+        let entries = fs::read_dir(target_path)
+            .expect("Coud not read Directory")
+            .map(|res| res.map(|e| e.file_name()))
+            .collect::<Result<Vec<_>, io::Error>>()
+            .expect("Could not collect paths");
+    
+        let body = entries.iter()
+            .map(|entry| format!("<a href=\"/{0}\">{0}</a><br />", entry.to_string_lossy()))
+            .collect::<Vec<_>>()
+            .join("");
+
+        let response = Response::builder()
+            .status(StatusCode::OK)
+            .header("Content-Type", "text/html")
+            .body(Body::from(body))
+            .unwrap();
+
+
+        return Ok(response);
+
     } else {
         println!("File not found");
         let response = Response::builder()
@@ -62,4 +76,58 @@ pub(crate) async fn serve_html(
             .unwrap();
         Ok(response)
     }
+
+
+
+
+    // if dir_path.is_dir(){
+
+    //     let entries = fs::read_dir(dir_path)
+    //         .expect("Coud not read Directory")
+    //         .map(|res| res.map(|e| e.file_name()))
+    //         .collect::<Result<Vec<_>, io::Error>>()
+    //         .expect("Could not collect paths");
+        
+    //     let body = entries.iter()
+    //         .map(|entry| format!("<a href=\"/{0}\">{0}</a><br />", entry.to_string_lossy()))
+    //         .collect::<Vec<_>>()
+    //         .join("");
+
+    //     let response = Response::builder()
+    //     .status(StatusCode::OK)
+    //     .header("Content-Type", "text/html")
+    //     .body(Body::from(body))
+    //     .unwrap();
+
+    //     return Ok(response);
+
+    // } else if dir_path.is_file()  {
+    //     println!("Found File");
+    //     match fs::read(dir_path){
+    //         Ok(contents) =>     {
+    //             let response = Response::builder()
+    //                 .status(StatusCode::OK)
+    //                 .body(Body::from(contents))
+    //                 .unwrap();
+    //             return Ok(response);
+    //         }
+    //         Err(err) => {
+    //             eprintln!("Failed to read file: {}", err);
+    //             let error_response = Response::builder()
+    //                 .status(StatusCode::INTERNAL_SERVER_ERROR)
+    //                 .body(Body::empty())
+    //                 .unwrap();
+    //             return Ok(error_response);
+    //         }
+    //     }
+    // } else {
+    //     println!("File not found");
+    //     let response = Response::builder()
+    //         .status(StatusCode::NOT_FOUND)
+    //         .body(Body::empty())
+    //         .unwrap();
+    //     Ok(response)
+    // }
+
+
 }

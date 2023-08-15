@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+
+         <meta name="color-scheme" content="dark light">
+  
         <style>
 
             body {
@@ -12,7 +15,6 @@
 
             h1 {
                 font-size: 2.5em;
-                color: #333;
                 font-weight: bold;
                 margin-top: 0.5em;
                 margin-bottom: 0.05em;
@@ -20,7 +22,6 @@
 
             p.description {
                 font-size: 1.5em;
-                color: #2b2929;
                 margin-bottom: 0em;
                 margin-top: 0em;
             }
@@ -39,9 +40,19 @@
                 opacity: 0.7;
             }
 
+            .home-link {
+                position: fixed;  /* Fixed position */
+                top: 5px;     /* Place the link at the top */
+                left: 10px;       /* And slightly from the left */
+                padding: 5px 10px;  /* Some padding to space out the text */
+                z-index: 999;      /* Make sure it appears on top */
+            }
+
         </style>
+
     </head>
     <body>
+         <a href="/index.html" class="home-link">Kirima</a>
         <h1>{{post_title}}</h1>
         <p class="description">{{post_description}}</p>
         <p class="date">{{post_date}}</p>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+
+         <meta name="color-scheme" content="dark light">
+  
         <style>
 
             body {
@@ -12,7 +15,6 @@
 
             h1 {
                 font-size: 2.5em;
-                color: #333;
                 font-weight: bold;
                 margin-top: 0.5em;
                 margin-bottom: 0.05em;
@@ -20,7 +22,6 @@
 
             p.description {
                 font-size: 1.5em;
-                color: #2b2929;
                 margin-bottom: 0em;
                 margin-top: 0em;
             }
@@ -39,9 +40,19 @@
                 opacity: 0.7;
             }
 
+            .home-link {
+                position: fixed;  /* Fixed position */
+                top: 5px;     /* Place the link at the top */
+                left: 10px;       /* And slightly from the left */
+                padding: 5px 10px;  /* Some padding to space out the text */
+                z-index: 999;      /* Make sure it appears on top */
+            }
+
         </style>
+
     </head>
     <body>
+         <a href="/index.html" class="home-link">Kirima</a>
         <h1></h1>
         <p class="description"></p>
         <p class="date"></p>
@@ -49,7 +60,7 @@
             <p>Hi! Welcome to my website where I occasionally blog about the Rust programming language.</p>
 <p>This site’s source code is available on GitHub.</p>
 <p>About Me</p>
-<p>I am a hobbyist Rust programmer, mainly spending my time contributing to open source projects. I’ve been using the language since October 2019, before which I mostly used C and C++. I am also decent at JavaScript and TypeScript, mostly in browser contexts.</p>
+<p>I am a Rust programmer, mainly spending my time building Rust web apps and backend tools. I’ve been using the language since September 2021, before which I mostly programmed in JavaScript and NodeJS. I am also decent with TypeScript.</p>
 <p>You can find me via:</p>
 <pre><code>GitHub, as Kelvin Kirima
 Discord, as Kelvin
@@ -61,6 +72,8 @@ Reddit as user
 <li><a href="test_post.html">Test Post</a></li>
 <li><a href="gentle_intro.html">A Gentle Introduction to Something Interesting</a></li>
 </ul>
+<p>Follow me on <a href="https://twitter.com/your_handle">Twitter</a> or <a href="https://linkedin.com/in/your_profile">LinkedIn</a>.</p>
+<p>© 2023 by Kirima. All rights reserved.</p>
 
         </div>
     </body>
