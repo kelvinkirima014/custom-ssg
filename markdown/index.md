@@ -1,12 +1,12 @@
 ---
 ---
-
+## Brief 
 Hi! Welcome to my website where I occasionally blog about the Rust programming language.
 
 This site’s source code is available on GitHub.
 
 
-About Me
+## About Me
 
 I am a Rust programmer, mainly spending my time building Rust web apps and backend tools. I’ve been using the language since September 2021, before which I mostly programmed in JavaScript and NodeJS. I am also decent with TypeScript.
 
