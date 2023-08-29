@@ -5,7 +5,7 @@
         <meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<meta name="color-scheme" content="dark light">
+		<meta name="color-scheme" content="light">
 		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme:light)">
 		<meta name="theme-color" content="#000000" media="(prefers-color-scheme:dark)">
 
@@ -16,109 +16,15 @@
 		<meta name="description" content="This tutorial will take you from zero to one in building on the Solana network. I’ll guide you through the entire process of developing on Solana by building an on-chain program using Rust and deploying it to the Solana test net. We’ll also interact with the on-chain program using the Solana/web3js Javascript API.">
 		<meta property="og:type" content="article">
 
-  
-        <style>
+        <link rel="stylesheet" href="posts.css">
+       
 
-            body {
-                display: grid;
-                place-items: center;
-                height: 100vh;
-                font-family: sans-serif;
-                font-size: 16px;
-                margin: 0;
-                line-height: 1.75;
-            }
-
-            .blog-container {
-                max-width: 800px;
-                width: 100%;
-                padding: 20px;
-            }
-
-            h1 {
-                text-align: center;
-                padding: 24px;
-                font-size: 2.5em;
-                font-weight: bold;
-                margin-top: 0.3em;
-                margin-bottom: 0.25em;
-            }
-
-            p.description {
-                font-size: 1.5em;
-                margin: 0;
-            }
-
-            p.date {
-                font-size: 1.0em;
-                color: #ece6e6;
-                margin-bottom: 1.5em;
-                font-style: italic;
-            }
-
-            a {
-                color: inherit;
-            }
-            a:hover {
-                opacity: 0.7;
-            }
-
-            .home-link {
-                position: fixed;
-                top: 14px;
-                left: 10px;
-                font-size: 28px;
-                padding: 5px 10px;  
-                text-decoration: none;
-            
-            }
-
-            #published {
-	            opacity: 0.7;
-            }
-
-            /* Heading anchors */
-            .anchor::before {
-                content: "§";
-                display: none;
-                position: absolute;
-                width: 1em;
-                margin-left: -1em;
-                text-decoration: none;
-                font-weight: normal;
-            }
-            :hover > .anchor::before {
-                display: block;
-            }
-
-            /* Code blocks */
-            code.scode {
-                padding: 3px 5px;
-                white-space: nowrap;
-            }
-            pre.scode {
-                padding: 16px;
-                overflow-x: scroll;
-            }
-            .scode {
-                border-radius: 6px;
-                font-size: 0.9em;
-                tab-size: 4;
-            }
-
-            /* Back to top arrow */
-            .back {
-                margin-top: 3em;
-            }
-
- 
-
-        </style>
 
     </head>
     <body>
          <a href="/index.html" class="home-link">Kirima</a>
         <h1>A Gentle Introduction to Solana</h1>
+        <div class="outline"><ul><li><a href='#prerequisites'>Prerequisites</a><ul><li><a href='#conclusion'>Conclusion</a></li></ul></li></ul></div>
         <div class="blog-container">
             <p>This tutorial will take you from <em>zero to one</em> in building on the <a href='https://solana.com/'>Solana network</a>. I’ll guide you through the entire process of developing on Solana by building an on-chain program using Rust and deploying it to the Solana test net. We’ll also interact with the on-chain program using the Solana/web3js Javascript API.</p><p>You don’t have to be familiar with Rust to learn from this tutorial. I’ll walk you through various Rust concepts that are necessary to understand the code and also point you to the best resources.</p><h2 id='prerequisites'><a href='#prerequisites' class='anchor'></a>Prerequisites</h2><pre class='scode'><code><span class="ssource srust">
 <span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> Program entrypoint&#39;s implementation

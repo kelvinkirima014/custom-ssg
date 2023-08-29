@@ -5,7 +5,7 @@
         <meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<meta name="color-scheme" content="dark light">
+		<meta name="color-scheme" content="light">
 		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme:light)">
 		<meta name="theme-color" content="#000000" media="(prefers-color-scheme:dark)">
 
@@ -16,7 +16,10 @@
 		<meta name="description" content="{{summary}}">
 		<meta property="og:type" content="article">
 
-  
+        <link rel="stylesheet" href="{{posts_css}}">
+       
+
+{{!--   
         <style>
 
             body {
@@ -113,12 +116,13 @@
 
  
 
-        </style>
+        </style> --}}
 
     </head>
     <body>
          <a href="/index.html" class="home-link">Kirima</a>
         <h1>{{title}}</h1>
+        <div class="outline">{{{outline}}}</div>
         <div class="blog-container">
             {{{content}}}
         </div>

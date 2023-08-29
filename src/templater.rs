@@ -5,7 +5,7 @@ use std::{collections::HashSet, hash::Hasher, fmt::Display};
 
 
 use pulldown_cmark;
-use syntect::{parsing::SyntaxSet, util::LinesWithEndings};
+use syntect::{parsing::SyntaxSet, util::LinesWithEndings, highlighting::ThemeSet};
 
 use crate::push_str::push;
 use crate::push_str::escape_href;
@@ -360,7 +360,8 @@ impl<'a> Renderer<'a>{
             return;
         };
 
-        let mut generator = syntect::html::ClassedHTMLGenerator::new_with_class_style(
+        
+         let mut generator = syntect::html::ClassedHTMLGenerator::new_with_class_style(
             syntax,
             self.syntax_set,
             SYNTECT_CLASS_STYLE,
@@ -472,8 +473,68 @@ const SYNTECT_CLASS_STYLE: syntect::html::ClassStyle =
 
 static SYNTAX_SET: Lazy<SyntaxSet> = Lazy::new(SyntaxSet::load_defaults_newlines);
 
+static THEME_SET: Lazy<ThemeSet> = Lazy::new(|| {
+    let mut theme_set = ThemeSet::default();
+    theme_set.add_from_folder("templates/code_themes").expect("Failed to load Themes!");
+    theme_set
+
+});
+
+
+
+
+use syntect::highlighting::{Theme, Color};
+
+fn generate_css_for_theme(theme: &Theme) -> String {
+
+    let mut css = String::new();
+
+    if let Some(background) = theme.settings.background {
+        css.push_str(&format!("body {{ background-color: {}; }}\n", color_to_css(background)));
+    }
+
+    if let Some(foreground) = theme.settings.foreground {
+        css.push_str(&format!("body {{ color: {}; }}\n", color_to_css(foreground)));
+    }
+
+
+    css
+}
+
+fn color_to_css(color: Color) -> String {
+    format!("#{:02X}{:02X}{:02X}", color.r, color.g, color.b)
+}
+
+
+fn append_css_to_file(css: &str, file_path: &PathBuf) -> std::io::Result<()> {
+    use std::fs::OpenOptions;
+    use std::io::Write;
+
+    let mut file = OpenOptions::new().append(true).open(file_path)?;
+    file.write_all(css.as_bytes())?;
+    Ok(())
+}
+
+
 
 pub(crate) fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error> {
+
+    for key in THEME_SET.themes.keys() {
+        println!("Loaded theme: {}", key);
+    }
+
+    let theme_name = "dark";
+    let theme = THEME_SET.themes.get(theme_name).expect("Failed to load theme");
+
+    // Generate the CSS string for the theme
+    let css_string = generate_css_for_theme(theme);
+
+    // Path to your posts.css
+    let posts_css = PathBuf::from("templates/posts.css");
+
+    // Append the generated theme CSS to posts.css
+    append_css_to_file(&css_string, &posts_css)?;
+
 
     let output_dir = PathBuf::from("blog");
 
@@ -486,15 +547,23 @@ pub(crate) fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error
         handlebars.register_template_file("template", "templates/posts.hbs")
         .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
 
+
+    let blog_posts_css_path = output_dir.join("posts.css");
+    fs::copy(&posts_css, &blog_posts_css_path)?;
+
+
     for (path, content) in posts {
        let markdown = parse(&content);
 
+
        let markdown_data = serde_json::json!({
+        "posts_css": "posts.css",
         "title": markdown.title,
         "content": markdown.body,
         "summary": markdown.summary,
         "outline": markdown.outline
        });
+
 
        let rendered_html = handlebars.render("template", &markdown_data)
         .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
