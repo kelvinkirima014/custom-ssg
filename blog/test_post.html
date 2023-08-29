@@ -2,7 +2,20 @@
 <html>
     <head>
 
-        <meta name="color-scheme" content="dark light">
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta name="color-scheme" content="dark light">
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme:light)">
+		<meta name="theme-color" content="#000000" media="(prefers-color-scheme:dark)">
+
+		<meta property="og:site_name" content="Kelvin Kirima">
+
+        <title> Kelvin Kirima </title>
+		<meta property="og:title" content="">
+		<meta name="description" content="OOOH M G! ">
+		<meta property="og:type" content="article">
+
   
         <style>
 
@@ -60,17 +73,54 @@
             
             }
 
+            #published {
+	            opacity: 0.7;
+            }
+
+            /* Heading anchors */
+            .anchor::before {
+                content: "§";
+                display: none;
+                position: absolute;
+                width: 1em;
+                margin-left: -1em;
+                text-decoration: none;
+                font-weight: normal;
+            }
+            :hover > .anchor::before {
+                display: block;
+            }
+
+            /* Code blocks */
+            code.scode {
+                padding: 3px 5px;
+                white-space: nowrap;
+            }
+            pre.scode {
+                padding: 16px;
+                overflow-x: scroll;
+            }
+            .scode {
+                border-radius: 6px;
+                font-size: 0.9em;
+                tab-size: 4;
+            }
+
+            /* Back to top arrow */
+            .back {
+                margin-top: 3em;
+            }
+
+ 
+
         </style>
 
     </head>
     <body>
          <a href="/index.html" class="home-link">Kirima</a>
-        <h1>Sound of Silence.</h1>
-        <p class="description">Can&#x27;t hear a thing.</p>
-        <p class="date">2021-09-25T11:00:00.000Z</p>
+        <h1></h1>
         <div class="blog-container">
-            <p>OOOH M G! </p>
-
+            <hr><span style='color:red'>heading does not have id</span><h2>title: Sound of Silence. description: Can’t hear a thing. date: 2021-09-25T11:00:00.000Z</h2><p>OOOH M G! </p>
         </div>
     </body>
 </html>

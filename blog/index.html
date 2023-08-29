@@ -2,7 +2,20 @@
 <html>
     <head>
 
-        <meta name="color-scheme" content="dark light">
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta name="color-scheme" content="dark light">
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme:light)">
+		<meta name="theme-color" content="#000000" media="(prefers-color-scheme:dark)">
+
+		<meta property="og:site_name" content="Kelvin Kirima">
+
+        <title> Kelvin Kirima </title>
+		<meta property="og:title" content="">
+		<meta name="description" content="Hi! Welcome to my website where I occasionally blog about the Rust programming language.">
+		<meta property="og:type" content="article">
+
   
         <style>
 
@@ -60,34 +73,58 @@
             
             }
 
+            #published {
+	            opacity: 0.7;
+            }
+
+            /* Heading anchors */
+            .anchor::before {
+                content: "§";
+                display: none;
+                position: absolute;
+                width: 1em;
+                margin-left: -1em;
+                text-decoration: none;
+                font-weight: normal;
+            }
+            :hover > .anchor::before {
+                display: block;
+            }
+
+            /* Code blocks */
+            code.scode {
+                padding: 3px 5px;
+                white-space: nowrap;
+            }
+            pre.scode {
+                padding: 16px;
+                overflow-x: scroll;
+            }
+            .scode {
+                border-radius: 6px;
+                font-size: 0.9em;
+                tab-size: 4;
+            }
+
+            /* Back to top arrow */
+            .back {
+                margin-top: 3em;
+            }
+
+ 
+
         </style>
 
     </head>
     <body>
          <a href="/index.html" class="home-link">Kirima</a>
         <h1></h1>
-        <p class="description"></p>
-        <p class="date"></p>
         <div class="blog-container">
-            <h2>Brief</h2>
-<p>Hi! Welcome to my website where I occasionally blog about the Rust programming language.</p>
-<p>This site’s source code is available on GitHub.</p>
-<h2>About Me</h2>
-<p>I am a Rust programmer, mainly spending my time building Rust web apps and backend tools. I’ve been using the language since September 2021, before which I mostly programmed in JavaScript and NodeJS. I am also decent with TypeScript.</p>
-<p>You can find me via:</p>
-<pre><code>GitHub, as Kelvin Kirima
+            <hr><hr><h2 id='brief'><a href='#brief' class='anchor'></a>Brief</h2><p>Hi! Welcome to my website where I occasionally blog about the Rust programming language.</p><p>This site’s source code is available on GitHub.</p><h2 id='about-me'><a href='#about-me' class='anchor'></a>About Me</h2><p>I am a Rust programmer, mainly spending my time building Rust web apps and backend tools. I’ve been using the language since September 2021, before which I mostly programmed in JavaScript and NodeJS. I am also decent with TypeScript.</p><p>You can find me via:</p><pre class='scode'><code>GitHub, as Kelvin Kirima
 Discord, as Kelvin
 Email, at info@kelvinkirima.com,
 Reddit as user
-</code></pre>
-<p>Articles</p>
-<ul>
-<li><a href="test_post.html">Test Post</a></li>
-<li><a href="gentle_intro.html">A Gentle Introduction to Something Interesting</a></li>
-</ul>
-<p>Follow me on <a href="https://twitter.com/your_handle">Twitter</a> or <a href="https://linkedin.com/in/your_profile">LinkedIn</a>.</p>
-<p>© 2023 by Kirima. All rights reserved.</p>
-
+</code></pre><h2 id='articles'><a href='#articles' class='anchor'></a>Articles</h2><ul><li><a href='test_post.html'>Test Post</a></li><li><a href='gentle_intro.html'>A Gentle Introduction to Something Interesting</a></li></ul><p>Follow me on <a href='https://twitter.com/your_handle'>Twitter</a> or <a href='https://linkedin.com/in/your_profile'>LinkedIn</a>.</p><p>© 2023 by Kirima. All rights reserved.</p>
         </div>
     </body>
 </html>

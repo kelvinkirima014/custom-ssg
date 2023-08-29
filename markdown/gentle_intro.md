@@ -1,13 +1,10 @@
----
-title: A Gentle Introduction to Solana.
-description: Learn how to build and deploy your own programs on the fastest blockchain and the fastest growing crypto ecosystem in the world.
-date: 2021-09-25T11:00:00.000Z
----
+# A Gentle Introduction to Solana
 
 This tutorial will take you from *zero to one* in building on the [Solana network](https://solana.com/). I’ll guide you through the entire process of developing on Solana by building an on-chain program using Rust and deploying it to the Solana test net. We’ll also interact with the on-chain program using the Solana/web3js Javascript API.
 
 You don't have to be familiar with Rust to learn from this tutorial. I’ll walk you through various Rust concepts that are necessary to understand the code and also point you to the best resources.
-### Prerequisites
+
+## Prerequisites { #prerequisites }
 
 
 ```rust
@@ -47,7 +44,7 @@ pub fn process_instruction(
 There's a lot of awesome things going on in the above code. Let's go through it line by line, as I promised. 
 
 
-### Conclusion
+### Conclusion { #conclusion }
 Congrats! We just created a solana program, deployed it on a local cluster, and interacted with it from the client side using a JSON RPC API.  
 You can use this tutorial as a reference on various Solana and Rust concepts as you build your own programs.
 

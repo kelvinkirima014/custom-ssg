@@ -2,7 +2,20 @@
 <html>
     <head>
 
-        <meta name="color-scheme" content="dark light">
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta name="color-scheme" content="dark light">
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme:light)">
+		<meta name="theme-color" content="#000000" media="(prefers-color-scheme:dark)">
+
+		<meta property="og:site_name" content="Kelvin Kirima">
+
+        <title>A Gentle Introduction to Solana Kelvin Kirima </title>
+		<meta property="og:title" content="A Gentle Introduction to Solana">
+		<meta name="description" content="This tutorial will take you from zero to one in building on the Solana network. I’ll guide you through the entire process of developing on Solana by building an on-chain program using Rust and deploying it to the Solana test net. We’ll also interact with the on-chain program using the Solana/web3js Javascript API.">
+		<meta property="og:type" content="article">
+
   
         <style>
 
@@ -60,55 +73,85 @@
             
             }
 
+            #published {
+	            opacity: 0.7;
+            }
+
+            /* Heading anchors */
+            .anchor::before {
+                content: "§";
+                display: none;
+                position: absolute;
+                width: 1em;
+                margin-left: -1em;
+                text-decoration: none;
+                font-weight: normal;
+            }
+            :hover > .anchor::before {
+                display: block;
+            }
+
+            /* Code blocks */
+            code.scode {
+                padding: 3px 5px;
+                white-space: nowrap;
+            }
+            pre.scode {
+                padding: 16px;
+                overflow-x: scroll;
+            }
+            .scode {
+                border-radius: 6px;
+                font-size: 0.9em;
+                tab-size: 4;
+            }
+
+            /* Back to top arrow */
+            .back {
+                margin-top: 3em;
+            }
+
+ 
+
         </style>
 
     </head>
     <body>
          <a href="/index.html" class="home-link">Kirima</a>
-        <h1>A Gentle Introduction to Solana.</h1>
-        <p class="description">Learn how to build and deploy your own programs on the fastest blockchain and the fastest growing crypto ecosystem in the world.</p>
-        <p class="date">2021-09-25T11:00:00.000Z</p>
+        <h1>A Gentle Introduction to Solana</h1>
         <div class="blog-container">
-            <p>This tutorial will take you from <em>zero to one</em> in building on the <a href="https://solana.com/">Solana network</a>. I’ll guide you through the entire process of developing on Solana by building an on-chain program using Rust and deploying it to the Solana test net. We’ll also interact with the on-chain program using the Solana/web3js Javascript API.</p>
-<p>You don't have to be familiar with Rust to learn from this tutorial. I’ll walk you through various Rust concepts that are necessary to understand the code and also point you to the best resources.</p>
-<h3>Prerequisites</h3>
-<pre><code class="language-rust">
-// Program entrypoint's implementation
-pub fn process_instruction(
-    program_id: &amp;Pubkey, // Public key of the account the hello world program was loaded into
-    accounts: &amp;[AccountInfo], // The account to say hello to
-    _instruction_data: &amp;[u8], // Ignored, all helloworld instructions are hellos
-) -&gt; ProgramResult {
-    msg!(&quot;Hello World Rust program entrypoint&quot;);
+            <p>This tutorial will take you from <em>zero to one</em> in building on the <a href='https://solana.com/'>Solana network</a>. I’ll guide you through the entire process of developing on Solana by building an on-chain program using Rust and deploying it to the Solana test net. We’ll also interact with the on-chain program using the Solana/web3js Javascript API.</p><p>You don’t have to be familiar with Rust to learn from this tutorial. I’ll walk you through various Rust concepts that are necessary to understand the code and also point you to the best resources.</p><h2 id='prerequisites'><a href='#prerequisites' class='anchor'></a>Prerequisites</h2><pre class='scode'><code><span class="ssource srust">
+<span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> Program entrypoint&#39;s implementation
+</span><span class="smeta sfunction srust"><span class="smeta sfunction srust"><span class="sstorage smodifier srust">pub</span> <span class="sstorage stype sfunction srust">fn</span> </span><span class="sentity sname sfunction srust">process_instruction</span></span><span class="smeta sfunction srust"><span class="smeta sfunction sparameters srust"><span class="spunctuation ssection sparameters sbegin srust">(</span>
+    <span class="svariable sparameter srust">program_id</span><span class="spunctuation sseparator srust">:</span> <span class="skeyword soperator srust">&amp;</span>Pubkey, <span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> Public key of the account the hello world program was loaded into
+</span>    <span class="svariable sparameter srust">accounts</span><span class="spunctuation sseparator srust">:</span> <span class="skeyword soperator srust">&amp;</span>[AccountInfo], <span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> The account to say hello to
+</span>    <span class="svariable sparameter srust">_instruction_data</span><span class="spunctuation sseparator srust">:</span> <span class="skeyword soperator srust">&amp;</span>[<span class="sstorage stype srust">u8</span>], <span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> Ignored, all helloworld instructions are hellos
+</span></span><span class="smeta sfunction srust"><span class="smeta sfunction sparameters srust"><span class="spunctuation ssection sparameters send srust">)</span></span></span></span><span class="smeta sfunction srust"> <span class="smeta sfunction sreturn-type srust"><span class="spunctuation sseparator srust">-&gt;</span> ProgramResult</span> </span><span class="smeta sfunction srust"><span class="smeta sblock srust"><span class="spunctuation ssection sblock sbegin srust">{</span>
+    <span class="ssupport smacro srust">msg!</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span><span class="sstring squoted sdouble srust"><span class="spunctuation sdefinition sstring sbegin srust">&quot;</span>Hello World Rust program entrypoint<span class="spunctuation sdefinition sstring send srust">&quot;</span></span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="spunctuation sterminator srust">;</span>
 
-    // Iterate over accounts
-    let accounts_iter = &amp;mut accounts.iter();
+    <span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> Iterate over accounts
+</span>    <span class="sstorage stype srust">let</span> accounts_iter <span class="skeyword soperator srust">=</span> <span class="skeyword soperator srust">&amp;</span><span class="sstorage smodifier srust">mut</span> accounts.<span class="ssupport sfunction srust">iter</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="spunctuation sterminator srust">;</span>
 
-    // Get the account to say hello to
-    let account = next_account_info(accounts_iter)?;
+    <span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> Get the account to say hello to
+</span>    <span class="sstorage stype srust">let</span> account <span class="skeyword soperator srust">=</span> <span class="ssupport sfunction srust">next_account_info</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span>accounts_iter</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="skeyword soperator srust">?</span><span class="spunctuation sterminator srust">;</span>
 
-    // The account must be owned by the program in order to modify its data
-    if account.owner != program_id {
-        msg!(&quot;Greeted account does not have the correct program id&quot;);
-        return Err(ProgramError::IncorrectProgramId);
-    }
+    <span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> The account must be owned by the program in order to modify its data
+</span>    <span class="skeyword scontrol srust">if</span> account.owner <span class="skeyword soperator srust">!</span><span class="skeyword soperator srust">=</span> program_id <span class="smeta sblock srust"><span class="spunctuation ssection sblock sbegin srust">{</span>
+        <span class="ssupport smacro srust">msg!</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span><span class="sstring squoted sdouble srust"><span class="spunctuation sdefinition sstring sbegin srust">&quot;</span>Greeted account does not have the correct program id<span class="spunctuation sdefinition sstring send srust">&quot;</span></span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="spunctuation sterminator srust">;</span>
+        <span class="skeyword scontrol srust">return</span> <span class="ssupport stype srust">Err</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span><span class="smeta spath srust">ProgramError<span class="spunctuation saccessor srust">::</span></span>IncorrectProgramId</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="spunctuation sterminator srust">;</span>
+    </span><span class="smeta sblock srust"><span class="spunctuation ssection sblock send srust">}</span></span>
 
-    // Increment and store the number of times the account has been greeted
-    let mut greeting_account = GreetingAccount::try_from_slice(&amp;account.data.borrow())?;
-    greeting_account.counter += 1;
-    greeting_account.serialize(&amp;mut &amp;mut account.data.borrow_mut()[..])?;
+    <span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span> Increment and store the number of times the account has been greeted
+</span>    <span class="sstorage stype srust">let</span> <span class="sstorage smodifier srust">mut</span> greeting_account <span class="skeyword soperator srust">=</span> <span class="smeta spath srust">GreetingAccount<span class="spunctuation saccessor srust">::</span></span>try_from_slice<span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span><span class="skeyword soperator srust">&amp;</span>account.data.<span class="ssupport sfunction srust">borrow</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="skeyword soperator srust">?</span><span class="spunctuation sterminator srust">;</span>
+    greeting_account.counter <span class="skeyword soperator srust">+</span><span class="skeyword soperator srust">=</span> <span class="sconstant snumeric sinteger sdecimal srust">1</span><span class="spunctuation sterminator srust">;</span>
+    greeting_account.<span class="ssupport sfunction srust">serialize</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span><span class="skeyword soperator srust">&amp;</span><span class="sstorage smodifier srust">mut</span> <span class="skeyword soperator srust">&amp;</span><span class="sstorage smodifier srust">mut</span> account.data.<span class="ssupport sfunction srust">borrow_mut</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">[</span><span class="skeyword soperator srust">..</span><span class="spunctuation ssection sgroup send srust">]</span></span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="skeyword soperator srust">?</span><span class="spunctuation sterminator srust">;</span>
 
-    msg!(&quot;Greeted {} time(s)!&quot;, greeting_account.counter);
+    <span class="ssupport smacro srust">msg!</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span><span class="sstring squoted sdouble srust"><span class="spunctuation sdefinition sstring sbegin srust">&quot;</span>Greeted {} time(s)!<span class="spunctuation sdefinition sstring send srust">&quot;</span></span><span class="spunctuation sseparator srust">,</span> greeting_account.counter</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span><span class="spunctuation sterminator srust">;</span>
 
-    Ok(())
-}
-//Minus the tests.
-</code></pre>
-<p>There's a lot of awesome things going on in the above code. Let's go through it line by line, as I promised. </p>
-<h3>Conclusion</h3>
-<p>Congrats! We just created a solana program, deployed it on a local cluster, and interacted with it from the client side using a JSON RPC API.<br />
-You can use this tutorial as a reference on various Solana and Rust concepts as you build your own programs.</p>
-
+    <span class="ssupport stype srust">Ok</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup sbegin srust">(</span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span></span><span class="smeta sgroup srust"><span class="spunctuation ssection sgroup send srust">)</span></span>
+</span><span class="smeta sblock srust"><span class="spunctuation ssection sblock send srust">}</span></span></span>
+<span class="scomment sline sdouble-slash srust"><span class="spunctuation sdefinition scomment srust">//</span>Minus the tests.
+</span></span></code></pre><p>There’s a lot of awesome things going on in the above code. Let’s go through it line by line, as I promised. </p><h3 id='conclusion'><a href='#conclusion' class='anchor'></a>Conclusion</h3><p>Congrats! We just created a solana program, deployed it on a local cluster, and interacted with it from the client side using a JSON RPC API.<br>You can use this tutorial as a reference on various Solana and Rust concepts as you build your own programs.</p>
         </div>
     </body>
 </html>

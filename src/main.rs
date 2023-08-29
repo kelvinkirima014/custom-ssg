@@ -4,8 +4,10 @@ use hyper::service::{make_service_fn, service_fn};
 use hyper::{Server, server::conn::AddrStream};
 
 pub mod posts;
-pub mod templater;
 pub mod server;
+pub mod templater;
+pub mod push_str;
+
 
 
 #[tokio::main]
