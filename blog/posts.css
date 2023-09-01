@@ -1,5 +1,8 @@
+* {
+	box-sizing: border-box; 
+}
+
 body {
-    display: grid;
     place-items: center;
     height: 100vh;
     font-family: sans-serif;
@@ -9,30 +12,32 @@ body {
 }
 
 .blog-container {
-    max-width: 800px;
-    width: 100%;
-    padding: 20px;
+    max-width: 80ch;
+	margin: 48px auto 0 auto;
+	padding: 0 16px;
+    list-style-type: disc;
+    overflow: hidden;
 }
 
-h1 {
+/* h1 {
     text-align: center;
     padding: 24px;
     font-size: 2.5em;
     font-weight: bold;
-    margin-top: 0.3em;
+    margin-top: 0.2em;
     margin-bottom: 0.25em;
+} */
+
+h2 {
+	margin-top: 1.2em;
 }
 
-p.description {
-    font-size: 1.5em;
-    margin: 0;
-}
-
-p.date {
-    font-size: 1.0em;
-    color: #ece6e6;
-    margin-bottom: 1.5em;
-    font-style: italic;
+header {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: center;
 }
 
 a {
@@ -43,10 +48,11 @@ a:hover {
 }
 
 .home-link {
-    position: fixed;
+    position: absolute;
     top: 14px;
-    left: 10px;
-    font-size: 28px;
+    left: 8px;
+    font-size: 30px;
+    font-family: sans-serif;
     padding: 5px 10px;  
     text-decoration: none;
 
@@ -55,6 +61,8 @@ a:hover {
 #published {
     opacity: 0.7;
 }
+
+
 
 /* Heading anchors */
 .anchor::before {
@@ -85,44 +93,54 @@ pre.scode {
     tab-size: 4;
 }
 
+/* .outline {
+    position: absolute;
+    top: 70px;
+    left: 530px;
+    margin-top: 0.9em;
+} */
+
 /* Back to top arrow */
 .back {
     margin-top: 3em;
 }
 
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
-body { background-color: #1D1F21; }
-body { color: #C5C8C6; }
+
+footer {
+    
+    text-align: center;           /* Center align the text */
+    padding: 10px 0;              /* Top and bottom padding */
+    width: 100%;                  /* Full width */
+    font-size: 0.9em;             /* Slightly smaller text */
+}
+
+
+
+/* Rust*/
+.srust .scomment { color: #5C6370; } /* Color for comments */
+.srust .sstring { color: #74e2a2; }  /* Color for strings */
+.srust .sstorage { color: #e06c75; } /* Color for storage types */
+.srust .smeta { color: hsl(338, 66%, 67%); }      /* Color for meta data like function declaration */
+.srust .svariable { color: #e5c07b; }/* Color for variables */
+.srust .skeyword { color: hsl(248, 40%, 66%); }  /* Color for keywords */
+.srust .ssupport { color: #56b6c2; } /* Color for support methods and macros */
+.srust .spunctuation { color: #abb2bf; } /* Color for punctuation like*/
+
+/* Shell scripting */
+.sshell .scomment { color: #5C6370; }
+.sshell .sstring { color: #74e2a2; }
+.sshell .ssupport { color: #56b6c2; }
+.sshell .sfunction { color: #e06c75; }
+.sshell .svariable { color: #e5c07b; }
+
+/* JavaScript */
+.sjs .scomment { color: #5C6370; }
+.sjs .sstring { color: #74e2a2; }
+.sjs .sstorage { color: #e06c75; }
+.sjs .smeta { color: hsl(338, 66%, 67%); }
+.sjs .svariable { color: #e5c07b; }
+.sjs .skeyword { color: hsl(248, 40%, 66%); }
+.sjs .ssupport { color: #56b6c2; }
+.sjs .spunctuation { color: #abb2bf; }
+.sjs .sfunction { color: #61aeee; }
+

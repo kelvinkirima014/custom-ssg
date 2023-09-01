@@ -1,29 +1,26 @@
----
----
-## Brief { #brief } 
-Hi! Welcome to my website where I occasionally blog about the Rust programming language.
+## Brief
 
-This site’s source code is available on GitHub.
+Hello! Welcome to my website where I occasionally blog about Programming, the Web, and the Rust programming language. This site's source code is available on [Github](https://github.com/kelvinkirima014/kelvinkirima.com).
 
+## About Me 
 
-## About Me { #about-me }
+I am a computer programmer, mainly spending my time building Rust web apps and backend tools. I’ve been using the language since September 2021, before which I mostly programmed in JavaScript and NodeJS. I am also decent with TypeScript. 
 
-I am a Rust programmer, mainly spending my time building Rust web apps and backend tools. I’ve been using the language since September 2021, before which I mostly programmed in JavaScript and NodeJS. I am also decent with TypeScript.
+## Hiring/Consultation
+For any inquiries about contracting or hiring; Please send me an email at contact@kelvinkirima.com
 
-You can find me via:
-
-    GitHub, as Kelvin Kirima
-    Discord, as Kelvin
-    Email, at info@kelvinkirima.com,
-    Reddit as user
+Some of my other relevant socials are:
 
 
-## Articles { #articles }
+- [Github](https://github.com/kelvinkirima014)
 
-- [Test Post](test_post.html)
-- [A Gentle Introduction to Something Interesting](gentle_intro.html)
+- [LinkedIn](https://linkedin.com/in/your_profile)
 
+- Discord Username: kelvin7460
+  
 
-Follow me on [Twitter](https://twitter.com/your_handle) or [LinkedIn](https://linkedin.com/in/your_profile).
+## Articles 
 
-© 2023 by Kirima. All rights reserved.
+- [Building This Site](building_this_site.html)
+- [A Gentle Introduction to Solana](gentle_intro.html)
+

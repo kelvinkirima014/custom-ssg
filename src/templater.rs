@@ -17,7 +17,7 @@ pub(crate) struct  Markdown {
     pub(crate) title: String,
     pub (crate) body: String,
     pub(crate) summary: String,
-    pub(crate) outline: String,
+    pub(crate) _outline: String,
 }
 
 pub(crate) fn parse(source: &str) -> Markdown {
@@ -133,7 +133,7 @@ impl<'a> Renderer<'a>{
             title: self.title, 
             body: self.body, 
             summary: self.summary, 
-            outline: self.outline, 
+            _outline: self.outline, 
         }
 
     }
@@ -170,10 +170,10 @@ impl<'a> Renderer<'a>{
                     self.outline.push_str("<ul>");
 
                     if level != self.outline_level + 1 {
-                        let outline_level = self.outline_level;
-                        self.error(format_args!(
-                            "heading level jump: {outline_level} to {level}"
-                        ));
+                        let _outline_level = self.outline_level;
+                        // self.error(format_args!(
+                        //     "heading level jump: {outline_level} to {level}"
+                        // ));
                         level = self.outline_level + 1;
                     }
                 }
@@ -192,7 +192,7 @@ impl<'a> Renderer<'a>{
                     escape_html(self, id);
                     self.push_str("' class='anchor'></a>");
                 } else {
-                    self.error("heading does not have id");
+                    // self.error("heading does not have id");
                     push!(self, "<h{level}>");
                 }
 
@@ -485,23 +485,25 @@ static THEME_SET: Lazy<ThemeSet> = Lazy::new(|| {
 
 use syntect::highlighting::{Theme, Color};
 
-fn generate_css_for_theme(theme: &Theme) -> String {
+fn generate_css_for_theme(_theme: &Theme) -> String {
 
-    let mut css = String::new();
+    let css = String::new();
 
-    if let Some(background) = theme.settings.background {
-        css.push_str(&format!("body {{ background-color: {}; }}\n", color_to_css(background)));
-    }
 
-    if let Some(foreground) = theme.settings.foreground {
-        css.push_str(&format!("body {{ color: {}; }}\n", color_to_css(foreground)));
-    }
+
+    // if let Some(background) = theme.settings.background {
+    //     css.push_str(&format!("body {{ background-color: {}; }}\n", color_to_css(background)));
+    // }
+
+    // if let Some(foreground) = theme.settings.foreground {
+    //     css.push_str(&format!("body {{ color: {}; }}\n", color_to_css(foreground)));
+    // }
 
 
     css
 }
 
-fn color_to_css(color: Color) -> String {
+fn _color_to_css(color: Color) -> String {
     format!("#{:02X}{:02X}{:02X}", color.r, color.g, color.b)
 }
 
@@ -531,7 +533,7 @@ pub(crate) fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error
 
     // Path to your posts.css
     let posts_css = PathBuf::from("templates/posts.css");
-
+           
     // Append the generated theme CSS to posts.css
     append_css_to_file(&css_string, &posts_css)?;
 
@@ -561,7 +563,7 @@ pub(crate) fn generate_html(posts: &[(PathBuf, String)]) -> Result<(), io::Error
         "title": markdown.title,
         "content": markdown.body,
         "summary": markdown.summary,
-        "outline": markdown.outline
+        //"outline": markdown.outline
        });
 
 
