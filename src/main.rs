@@ -1,5 +1,5 @@
 use std::io;
-use std::{path::PathBuf, sync::Arc};
+use std::path::PathBuf;
 use hyper::service::{make_service_fn, service_fn};
 use hyper::{Server, server::conn::AddrStream};
 
@@ -22,11 +22,12 @@ async fn main () -> Result<(), Box<io::Error>> {
     templater::generate_html(&get_posts)?;
 
 
-    let content_dir = Arc::new(PathBuf::from("./blog"));
-    
+    //let content_dir = Arc::new(PathBuf::from("./blog"));
+    let content_dir = PathBuf::from("./blog");
 
     let make_hyper_service = make_service_fn(|_: &AddrStream| {
 
+        // let content_dir = content_dir.clone();
         let content_dir = content_dir.clone();
 
         async {

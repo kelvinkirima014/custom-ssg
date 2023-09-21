@@ -1,8 +1,9 @@
 * {
-	box-sizing: border-box; 
+	box-sizing: border-box;   
 }
 
 body {
+    border-top: 2px solid hwb(331 0% 0% / 0.873);
     place-items: center;
     height: 100vh;
     font-family: sans-serif;
@@ -32,30 +33,24 @@ h2 {
 	margin-top: 1.2em;
 }
 
-header {
-	width: 100%;
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: space-between;
-	align-items: center;
-}
-
 a {
     color: inherit;
+    text-decoration: underline;
+    text-decoration-color: hwb(331 0% 0% / 0.873);
 }
 a:hover {
     opacity: 0.7;
 }
 
 .home-link {
-    position: absolute;
-    top: 14px;
+    position: relative;
+    top: 12px;
     left: 8px;
     font-size: 30px;
     font-family: sans-serif;
-    padding: 5px 10px;  
+    padding: 5px 10px;
     text-decoration: none;
-
+    margin-bottom: 15px;
 }
 
 #published {
@@ -119,10 +114,10 @@ footer {
 /* Rust*/
 .srust .scomment { color: #5C6370; } /* Color for comments */
 .srust .sstring { color: #74e2a2; }  /* Color for strings */
-.srust .sstorage { color: #e06c75; } /* Color for storage types */
-.srust .smeta { color: hsl(338, 66%, 67%); }      /* Color for meta data like function declaration */
+.srust .sstorage { color: hwb(202 23% 18%); } /* Color for storage types */
+.srust .smeta { color: hwb(293 56% 11%); }      /* Color for meta data like function declaration */
 .srust .svariable { color: #e5c07b; }/* Color for variables */
-.srust .skeyword { color: hsl(248, 40%, 66%); }  /* Color for keywords */
+.srust .skeyword { color: hwb(356 30% 27%); }  /* Color for keywords */
 .srust .ssupport { color: #56b6c2; } /* Color for support methods and macros */
 .srust .spunctuation { color: #abb2bf; } /* Color for punctuation like*/
 

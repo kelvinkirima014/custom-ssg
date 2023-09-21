@@ -1,4 +1,4 @@
-use std::{sync::Arc, io};
+use std::io;
 use std::path::PathBuf;
 use std::fs;
 use hyper::{Body, Response, Request, StatusCode};
@@ -6,15 +6,10 @@ use hyper::{Body, Response, Request, StatusCode};
 
 pub(crate) async fn serve_html(
     req: Request<Body>,
-    content_dir: Arc<PathBuf>,
+    content_dir: PathBuf,
 ) -> Result<Response<Body>, hyper::Error> {
 
     let request_path = req.uri().path().trim_start_matches('/');
-
-    // let dir_path = content_dir.join(request_path);
-    // println!("Directory path is; {:?}", dir_path);
-
-
 
     let target_path = if request_path.is_empty() {
         content_dir.join("index.html")
