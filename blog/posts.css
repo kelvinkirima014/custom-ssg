@@ -110,12 +110,11 @@ footer {
 }
 
 
-
 /* Rust*/
 .srust .scomment { color: #5C6370; } /* Color for comments */
 .srust .sstring { color: #74e2a2; }  /* Color for strings */
 .srust .sstorage { color: hwb(202 23% 18%); } /* Color for storage types */
-.srust .smeta { color: hwb(293 56% 11%); }      /* Color for meta data like function declaration */
+.srust .smeta { color: rgb(228, 168, 235); }      /* Color for meta data like function declaration */
 .srust .svariable { color: #e5c07b; }/* Color for variables */
 .srust .skeyword { color: hwb(356 30% 27%); }  /* Color for keywords */
 .srust .ssupport { color: #56b6c2; } /* Color for support methods and macros */
@@ -138,4 +137,3 @@ footer {
 .sjs .ssupport { color: #56b6c2; }
 .sjs .spunctuation { color: #abb2bf; }
 .sjs .sfunction { color: #61aeee; }
-
